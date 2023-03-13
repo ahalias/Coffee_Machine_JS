@@ -1,0 +1,60 @@
+type: remote_edu
+files:
+- name: main.js
+  visible: true
+  text: |-
+    // Use "input()" to input a line from the user
+    // Use "input(str)" to print some text before requesting input
+    // You will need this in the following stages
+    const input = require('sync-input')
+
+    let water = input(`Write how many ml of water the coffee machine has:`);
+    let milk = input(`Write how many ml of milk the coffee machine has:`);
+    let beans = input(`Write how many grams of coffee beans the coffee machine has:`);
+    let cups = input(`Write how many cups of coffee you will need:`);
+
+    waterPossible = Math.floor(water / 200);
+    milkPossible = Math.floor(milk / 50);
+    beansPossible = Math.floor(beans / 15);
+    cupsPossible = Math.min(...[waterPossible, milkPossible, beansPossible]);
+
+    let options = {
+      No: `No, I can make only ${cupsPossible} cups of coffee`,
+      Yes: `Yes, I can make that amount of coffee`,
+      More: `Yes, I can make that amount of coffee (and even ${cupsPossible - cups} more than that)`
+    }
+    if (cups > cupsPossible) {
+      console.log(options.No)
+    } else if (cups == cupsPossible) {
+        console.log(options.Yes)
+    } else {
+        console.log(options.More)
+    }
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |
+    from hstest import *
+
+
+    class CoffeeMachineTest(StageTest):
+        @dynamic_test
+        def empty_test(self):
+            p = TestedProgram()
+            p.start()
+            if p.is_finished():
+                return wrong("Your program should not terminate "
+                             "immediately after starting")
+            return correct()
+
+
+    if __name__ == '__main__':
+        CoffeeMachineTest().run_tests()
+  learner_created: false
+feedback_link: https://hyperskill.org/projects/220/stages/1106/implement#comment
+check_profile: hyperskill_node_javascript
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: "Sun, 12 Mar 2023 23:59:44 UTC"
+record: -1
